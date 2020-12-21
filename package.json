@@ -16,6 +16,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "crypto-js": "^4.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "sirv-cli": "^1.0.0"
   }

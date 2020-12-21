@@ -39,7 +39,7 @@ export default {
     file: 'public/build/bundle.js'
   },
   plugins: [
-    builtins({ crypto: false }),
+    builtins({ crypto: true }),
     svelte({
       compilerOptions: {
         // enable run-time checks when not in production
