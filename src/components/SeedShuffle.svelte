@@ -1,6 +1,6 @@
 <script>
 
-import { shuffle, deshuffle } from '../../lib/seedshuffle.js';
+import { shuffle, deshuffle } from '../../lib/seedshuffle_browser.js';
 
 let password;
 let password2;
