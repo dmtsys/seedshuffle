@@ -32,7 +32,11 @@ let more;
     <input bind:value={password} placeholder="enter a new password">
   </p>
 
+  <h3>Protected (shuffled) seed:</h3>
+
   <p id="shuffled">{shuffled}</p>
+
+  <hr>
 
   <h2>De-shuffle:</h2>
 
@@ -43,6 +47,7 @@ let more;
     <input bind:value={password2} placeholder="re-enter password">
   </p>
 
+  <h3>Original seed (1 2 3 ...) if password matches:</h3>
   <p id="mnemonic">{deshuffled_seed}</p>
 
   <button class:invisible={more} on:click={() => { more = true; }}>More</button>
