@@ -3,7 +3,8 @@
 </script>
 
 <main>
-	<h1>SEED SHUFFLE</h1>
+  <a href="/"><h1>SEED SHUFFLE</h1></a>
+
 
   <SeedShuffle />
 </main>
@@ -22,6 +23,10 @@
 		font-size: 4em;
 		font-weight: 100;
 	}
+
+  a {
+    text-underline-offset: 7px;
+  }
 
 	@media (min-width: 640px) {
 		main {
