@@ -50,7 +50,12 @@ let more;
   <h3>Original seed (1 2 3 ...) if password matches:</h3>
   <p id="mnemonic">{deshuffled_seed}</p>
 
-  <button class:invisible={more} on:click={() => { more = true; }}>More</button>
+  <hr>
+
+  <h2>Details</h2>
+  <p>
+    <button class:invisible={more} on:click={() => { more = true; }}>See more information about the algorithm</button>
+  </p>
 
   <div class:invisible={!more}>
 
@@ -87,34 +92,38 @@ Don't worry if you don't grasp these details immediately, it takes some thinking
     How it works:
   </h2>
 
-
     <b>Preparation:</b>
-    <ul>
-      <li>calculate the SHA256 hash of the password</li>
-      <li>this results in pseudo-random sequence like: 011001101010001 ... 01001 (exactly 256 bits)</li>
-      <li>sequence is split into chunks of 5 bits: 01100 11010 10001 ... we only need the first 24 chunks</li>
-      <li>each chunk of 5 bits represents an integer between 0 and 31 (= 2<sup>5</sup> integers)</li>
-    </ul>
+    <ol>
+      <li>1.) calculate the SHA256 hash of the password</li>
+      <li>2.) this results in pseudo-random sequence like: 011001101010001 ... 01001 (exactly 256 bits)</li>
+      <li>3.) sequence is split into chunks of 5 bits: 01100 11010 10001 ... we only need the first 24 chunks</li>
+      <li>4.) each chunk of 5 bits represents an integer between 0 and 31 (= 2<sup>5</sup> integers)</li>
+    </ol>
 
     <b>Shuffling:</b>
 
-    <br>
-    <br>
-    <b>for each</b> chunk <b>from</b> 0 <b>to</b> 23:<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<b>take and remove</b> <i> nth word</i> from original seed <b>where</b><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;n <b>=</b> chunk value [0..31] <b>modulus</b> <i> number of remaining words from original seed</i>
+    <p>
+      <b>for each</b> chunk <b>from</b> 0 <b>to</b> 23:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>take and remove</b> <i> nth word</i> from original seed <b>where</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;n <b>=</b> chunk value [0..31] <b>modulus</b> <i> number of remaining words from original seed</i>
+    </p>
 
 
-  <p><a href="https://github.com/dmtsys/seedshuffle" target="_blank">Source code</a></p>
+    <p>
+      <a href="https://github.com/dmtsys/seedshuffle" target="_blank">Source code</a>
+    </p>
 
-  <h2>About BIP39 passphrases:</h2>
+    <h2>About BIP39 passphrases:</h2>
 
-  <p>
-    <a href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#from-mnemonic-to-seed" target="_blank">BIP39 standard</a> already offers mnemonic (seed) protection by a passphrase, however it works a bit different. In this case you don't have a pure version of mnemonic, it's always 24 words + passphrase that produce a valid private key. So why not use that? <b>Maybe you should,</b> however it is not practical in many cases, for example: Ledger Nano S didn't offer this option until version 1.3 of firmware. So to retrogradely protect your seed, you would actually have to create a new account (= public/private key pair) and move the funds over. This is one reason where <i>SeedShuffle</i> comes very handy. A similar case is when you come to Ledger as a newcomer and simply don't use the passphrase feature because you are not yet familiar with it, then you later have the same problem as already described. Another option could be that you always want to use the simplest possible primitive to avoid special bugs and then apply well understood encryption (shuffle) yourself. One disadvantage of SeedShuffle over BIP39 passphrase protection is less bits of entropy for passphrases over 13 characters long, meaning that BIP39 passphrase offers more theoretical protection if you choose a really strong password (up to 256 bits). As already mentioned 80 bits (or 79 for that matter) is already considered secure. Additional fact is that nobody will (or should) see your shuffled seed, so you have two frontiers: you still hide shuffled seed and on top of that "just in case" you have 79 bits of security.
-    <br>
-    <br>
-    There might be other use cases for SeedShuffle based on the fundamental difference that you can produce shuffled seeds protected by infinitely many different passwords while BIP39 is a combination of particular 24 words and a particular passphrase. This means that you could encode your seed with different passwords and make your security scheme based on this. So again: BIP39 is always just 24 words + one specific 25th word, no possibility of multiple encrypted seeds which all translate to one original.
-  </p>
+    <p>
+      <a href="https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#from-mnemonic-to-seed" target="_blank">BIP39 standard</a> already offers mnemonic (seed) protection by a passphrase, however it works a bit different. In this case you don't have a pure version of mnemonic, it's always 24 words + passphrase that produce a valid private key. So why not use that? <b>Maybe you should,</b> however it is not practical in many cases, for example: Ledger Nano S didn't offer this option until version 1.3 of firmware. So to retrogradely protect your seed, you would actually have to create a new account (= public/private key pair) and move the funds over. This is one reason where <i>SeedShuffle</i> comes very handy. A similar case is when you come to Ledger as a newcomer and simply don't use the passphrase feature because you are not yet familiar with it, then you later have the same problem as already described. Another option could be that you always want to use the simplest possible primitive to avoid special bugs and then apply well understood encryption (shuffle) yourself. One disadvantage of SeedShuffle over BIP39 passphrase protection is less bits of entropy for passphrases over 13 characters long, meaning that BIP39 passphrase offers more theoretical protection if you choose a really strong password (up to 256 bits). As already mentioned 80 bits (or 79 for that matter) is already considered secure. Additional fact is that nobody will (or should) see your shuffled seed, so you have two frontiers: you still hide shuffled seed and on top of that "just in case" you have 79 bits of security.
+    </p>
+    <p>
+      There might be other use cases for SeedShuffle based on the fundamental difference that you can produce shuffled seeds protected by infinitely many different passwords while BIP39 is a combination of particular 24 words and a particular passphrase. This means that you could encode your seed with different passwords and make your security scheme based on this. So again: BIP39 is always just 24 words + one specific 25th word, no possibility of multiple encrypted seeds which all translate to one original.
+    </p>
+    <p>
+      In conclusion: the main drawback of BIP39 is the generation of completely new addresses. You cannot protect your existing identities / wallets in this way. And today (with lots of DAPP / DAO interactions) it's usually a lot of hassle moving everything to some other address... Another benefit of SeedShuffle: if you think your password was compromised (but they didn't get your shuffled seed), then you can just destroy the current shuffled version and make a new one with new password.. your identity / crypto wallet address stays the same.
+    </p>
 
   </div>
 
@@ -125,12 +134,13 @@ Don't worry if you don't grasp these details immediately, it takes some thinking
   font-size: 0.7em;
 }
 
-ul {
-  //list-style-type: none;
+ol {
+  list-style-type: none;
   padding: 0;
+  /*text-align: center;*/
 }
+
 li {
-  //display: inline-block;
   margin: 0 10px;
 }
 a {
